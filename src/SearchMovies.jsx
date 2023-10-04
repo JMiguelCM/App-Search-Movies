@@ -1,27 +1,9 @@
-import { useState } from "react";
 import "./styles/styles.css";
+import { useGetMovies } from "./helper/useGetMovies";
 
 export const SearchMovies = () => {
-  const urlBase = "";
-  const API_KEY = "";
-
-  const [search, setSearch] = useState("");
-  const [peliculas, setPeliculas] = useState([""]);
-
-  const handleInputChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const fetchPeliculas = async () => {
-    try {
-      const response = await fetch();
-    } catch (error) {}
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchPeliculas();
-  };
+  
+  const { search, peliculas, handleInputChange, handleSubmit } = useGetMovies();
 
   return (
     <div className="container">
@@ -37,6 +19,20 @@ export const SearchMovies = () => {
           Buscar
         </button>
       </form>
+
+      <div className="movie-list">
+        {peliculas.map((pelicula) => (
+          <div key={pelicula.id} className="movie-card">
+            <img
+              src={`https://image.tmdb.org/t/p/w500${pelicula.poster_path}`}
+              alt={pelicula.title}
+            />
+
+            <h2>{pelicula.title}</h2>
+            <p>{pelicula.overview}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
